@@ -373,13 +373,62 @@ public class INT02_TC1 {
      *          5           N/16     [1->N/16]      N/16 
      *          .           .           .           .
      *          .           .           .           .
-     *          k           1      [1->N/2^k]       N/2^k 
+     *          .           2        [1->2]         2
+     *          k           1        [1->1]         1 
      * 
-     *  Total = [N + N/2 + N/2^2 + N/2^3 + ... + N/2^k]  -> GP
-     *              -> N*(1/2^k - 1)/(1/2)
-     *              -> 2N*(1/2^k - 1)
+     *  Total = [N + N/2 + N/2^2 + N/2^3 + ... + 4 + 2 + 1]  -> GP  && k [ No. of terms ] = logN
+     *              -> 1(2^logN - 1)/(2-1)
+     *              -> (N - 1)
      * 
-     *  Ans: 2N*(1/2^k - 1) iterations
+     *  Ans: (N - 1) iterations
+    */
+
+
+    // HW
+    public static void Q19 (int N) {
+        for (int i=3; i>N/3; i+=3) {
+            for (int j=2; j<=N/2; j+=2) {
+                System.out.println("Hello World");
+            }
+        }
+    }
+    /**
+     *      Iterations      i           j         Total Iterations in J's loop
+     *          1           3        [2->N/2]           N/4
+     *          2           6        [2->N/2]           N/4  
+     *          3           9        [2->N/2]           N/4 
+     *          4           12       [2->N/2]           N/4 
+     *          .           .           .               .
+     *          .           .           .               .
+     *          k           N/3      [2->N/2]           N/4
+     *                                              -------------
+     *                                          Total = [N/4 + N/4 + N/4 + .... N/9 times]
+     *                                                = N/4*N/9 == N^2/36
+     *                                          TC  = O(N^2)
+     * 
+     *      - Here J's Iterations = [2, 4, 6, 8 .... N/2 ]
+     *      - Simply, in N/2 terms we are skipping every 2nd term -> (N/2)/2 = N/4terms
+     *              (or)
+     *      - in AP, --> tn = a + (n - 1) d
+     *                    n = (tn - a)/d + 1
+     *                      = (N/2 - 2)/2 +1 
+     *                      = N/4 Terms
+     * 
+     *      - Similarly, i's Iterations = [3, 6, 9, 12 ... N/3]
+     *      - Simply, in N/3 terms we are skipping every 3rd term -> (N/3)/3 = N/9terms
+     *              (or)
+     *      - in AP, --> tn = a + (n - 1) d
+     *                    n = (tn - a)/d + 1
+     *                      = (N/3 - 3/3 +1 
+     *                      = N/9 Terms
+    */
+
+
+    /*
+     *  NOTE:
+     *      - Always assume condition is equal [ if condition is  i<N/2 --> i=N/2]
+     *      - AP -->  tn = a + (n - 1) d
+     *      - GP -->   b = a * r ^ (n − 1)
     */
 
 }
