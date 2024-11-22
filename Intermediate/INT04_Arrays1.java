@@ -14,6 +14,7 @@ public class INT04_Arrays1 {
             arr[i] = sc.nextInt();
         }
 
+        sc.close();
     }
 
     // Printing an Array Elements
