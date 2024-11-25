@@ -9,7 +9,7 @@ public class INT06_Arrays3CarryForward {
          *              a. A single Element is a Sub-Array
          *              b. Full Array is also a Sub-Array
          *              c. Empty Array [] is also a SUb-Array
-         */
+        */
     }
 
 
@@ -145,6 +145,23 @@ public class INT06_Arrays3CarryForward {
      *      Obs:    
      *          - We need only 1 min & 1 max
      *          - Always min & max will be corner elements --> [min ... max] or [max ... min]
+     * 
+     *      Sol-1:
+     *          - Find the min & max elements in the array
+     *          - Itereate over the elements using "i"
+     *                  - If max is found --> Iterate over remaining elements using "j" until you find the min
+     *                          - Once you find the min from the remaining elemnts --> cal length = j-i+1
+     *                          - COmpare the length to the ans & update the ans
+     *                  - Do the same, if you find the min value
+     * 
+     *      sol-2:
+     *          - This is similar to that of count pairs 'ag'
+     *          - calculate the min & max of the array
+     *          - Iterate over elements using 'i'
+     *                  - Maintain 2 variable --> minIndex & MaxIndex to store the nearest/latest min & max
+     *                  - if you find the min element --> cal the length = i-maxInd+1
+     *                  - if you find the max element --> cal the length = i-minInd+1
+     *                  - Compare with ans variable & update the ans
     */
     public static void countMinMaz (int[] arr) {
         int n = arr.length;
@@ -160,9 +177,71 @@ public class INT06_Arrays3CarryForward {
             }
         }
 
-        for (int i=0; i<n; i++) {
-            
+        // 1. Logic
+        int ans = n;
+
+        // If min & max are equal
+        if (min == max) {
+            ans = 1;
+            System.out.println(ans);
+            return;
         }
+
+        // If min & max are NOT equal
+        for (int i=0; i<n; i++) {
+            int currAns = 0;
+            if (arr[i] == max) {
+                for (int j=i+1; j<n; j++) {
+                    if (arr[j] == min) {
+                        currAns = j-i+1;
+                        break;
+                    }
+                }
+                if (currAns < ans) {
+                    ans = currAns;
+                }
+            }
+            else if (arr[i] == min) {
+                for (int j=i+1; j<n; j++) {
+                    if (arr[j] == max) {
+                        currAns = j-i+1;                    
+                    }
+                }
+                if (currAns < ans) {
+                    ans = currAns;
+                }
+            }
+        }
+        System.out.println(ans);
+        // TC = O(N^2) || SC = O(1) 
+
+
+        // 2. Optimized
+        if (min == max) {
+            System.out.println(1);
+            return;
+        }
+
+        int minInd = -1;
+        int maxInd = -1;
+        int sol = n;
+        for (int i=0; i<n; i++) {
+            if (arr[i] == min) {
+                if (maxInd != -1) {
+                    sol = Math.min(sol, i-maxInd+1);
+                }
+                minInd = i;
+                
+            }
+            else if (arr[i] == max) {
+                if (minInd != -1) {
+                    sol = Math.min(sol, i-minInd+1);
+                }
+                maxInd = i;
+            }
+        }
+        System.out.println(sol);
+        // TC = O(N) || SC = O(1)
     }
     
 }
