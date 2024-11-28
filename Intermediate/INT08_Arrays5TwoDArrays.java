@@ -1,8 +1,8 @@
-package Intermediate;
+// package Intermediate;
 
 import java.util.Scanner;
 
-public class INTo8_Arrays5TwoDArrays {
+public class INT08_Arrays5TwoDArrays {
     public static void main(String[] args) {
         /*
          *  Matrices:

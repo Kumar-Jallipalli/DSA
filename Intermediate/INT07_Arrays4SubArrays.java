@@ -1,4 +1,4 @@
-package Intermediate;
+// package Intermediate;
 
 public class INT07_Arrays4SubArrays {
     public static void main(String[] args) {

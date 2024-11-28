@@ -1,4 +1,4 @@
-package Intermediate;
+// package Intermediate;
 
 public class INT06_Arrays3CarryForward {
     public static void main(String[] args) {

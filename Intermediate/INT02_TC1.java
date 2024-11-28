@@ -1,4 +1,5 @@
-package Intermediate;
+// package Intermediate;
+
 public class INT02_TC1 {
     public static void main (String[] args) {
 
