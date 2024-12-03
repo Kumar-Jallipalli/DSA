@@ -132,18 +132,116 @@ public class INT10_BM1 {
      *  ------------------
      *      "&"     - And   [ If both 1 -> 1 | esle 0]
      *      "|"     - Or    [ If any one has 1 -> 1 | else 0]
-     *      "^"     - XOR   [ If both same -> 0 || If both NOT same -> 1 ]
+     *      "^"     - XOR - Addition without Carry  [ If both same -> 0 || If both NOT same -> 1 ]
      *      "~"     - Inverse   [ Opposite of itself ]
      *      "<<"    - Left Shift
      *      ">>"    - Right Shift
      * 
      *  Truth Table
      *  -----------
-     *          a       b       a&b     a|b     a^b     ~a
-     *         ---     ---      ---     ---     ---     -- 
-     *          0       0       0       0       0       1
-     *          0       1       0       1       1       1
-     *          1       0       0       1       1       0
-     *          1       1       1       1       0       0
-     */
+     *          a       b       a&b     a|b     a^b     ~a      ~b
+     *         ---     ---      ---     ---     ---     --      --
+     *          0       0       0       0       0       1       1
+     *          0       1       0       1       1       1       0
+     *          1       0       0       1       1       0       1
+     *          1       1       1       1       0       0       0
+     * 
+     *  EX: 
+     *      if a=29, b=19 then print a&b
+     *          a = 1 1 1 0 1
+     *          b = 1 0 0 1 1
+     *         --------------
+     *        a&b = 1 0 0 0 1 == 17
+     *        a|b = 1 1 1 1 1 == 31
+     *        a^b = 0 1 1 1 0 == 14
+     * 
+     *  Propertie:
+     *  ----------
+     *      1. a&1 = 0/1 [ if a is even -> 0 || if a is odd -> 1 ]
+     *               i.e., simply check the last digit of a
+     *                  if last digit of a is 1 [odd] -> 1 
+     *                  else if last digit is 0 [even] -> 0
+     * 
+     *      2. a&0 = 0     
+     *      3. a&a = a
+     * 
+     *      4. a|0 = a
+     *      5. a|1 = 
+     *      6. a|a = a
+     * 
+     *      7. a^0 = a
+     *      8. a^1 = (a-1)/(a+1) [ if odd = a-1 || else even = a+1] 
+     *      9. a^a = 0
+     * 
+     *      10. a&b == b&a      => a&b&c == b&c&a == c&b&a
+     *      11. a|b == b|a      => a|b|c == b|c|a == c|b|a
+     *      12. a^b == b^a      => a^b^c == b^c^a == c^b^a
+     * 
+     * 
+     *  EX:
+     *      1. a^b^a^d^c ==?
+     *              = (a^b)^(a^b)^d 
+     *              = 0^d 
+     *              = d
+     *      
+     *      2. e^f^a^f^e^g^f
+     *              = (a^a)^(e^e)^{f^f}^g   
+     *              = 0^0^0^g
+     *              = g
+    */
+
+
+    /*
+     *  Q: Given N array Elements, Every element repeats twice except 1, find the unique element
+     *      Ex: arr = { 6 9 10 6 9 }            --> Ans = 10
+     *          arr = { 12 9 8 12 8 7 9 8 }     --> Ans = 7
+    */
+    public static void main (int[] arr) {
+        int n = arr.length;
+        // Brute force [ loop through every element & find the unqiue ]
+        for (int i=0; i<n; i++) {
+            int count = 0;
+            for (int j=0; j<n; j++) {
+                if (arr[i] == arr[j]) {
+                    count++;
+                }
+            }
+            if (count == 1) {
+                System.out.println(arr[i]);
+                break;
+            }
+        }
+        // TC = O(N^2) || Sc = O(1)
+
+        // Optimal [ use XOR operator ]
+        int ans = 0;
+        for (int i=0; i<n; i++) {
+            ans = ans^arr[i];
+        }
+        System.out.println(ans);
+        // TC = O(N) || SC = O(1)
+    }
+
+
+    /*
+     *  Left Shift:
+     *  ----------
+     *      - Let's assume or numbers are 8-bit numbers
+     *  Ex:                 7   6   5   4   3   2   1   0
+     *      a=10            0   0   0   0   1   0   1   0   = 10 -> 10*2^0
+     *                    /    /   /   /   /   /   /   /
+     *      a<<1    discard   0   0   0   1   0   1   0   0 -> This is added  
+     *                  ans = 00010100  = 20 -> 10*2^1
+     *                  - "o" is always added to 0th digit & last digit is discarded
+     *      
+     *      a<<2            0   0   1   0   1   0   0   0   -> 40   = 10*2^2
+     *      a<<3            0   1   0   1   0   0   0   0   -> 80   = 10*2^3
+     *      a<<4            1   0   1   0   0   0   0   0   -> 160  = 10*2^4
+     *      a<<5            0   1   0   0   0   0   0   0   -> Here, we lost important bit due to discard --> OverFlow
+     * 
+     *      a<<1 = a*2^1
+     *      a<<2 = a*2^2
+     *      a<<3 = a*2^3            =>      a<<n = a*2^n    [ until Overflow ]
+     *      a<<4 = a*2^4
+    */ 
 }
