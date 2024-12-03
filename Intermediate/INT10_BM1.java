@@ -232,7 +232,7 @@ public class INT10_BM1 {
      *                    /    /   /   /   /   /   /   /
      *      a<<1    discard   0   0   0   1   0   1   0   0 -> This is added  
      *                  ans = 00010100  = 20 -> 10*2^1
-     *                  - "o" is always added to 0th digit & last digit is discarded
+     *                  - "o" is always added to last digit & First digit is always discarded
      *      
      *      a<<2            0   0   1   0   1   0   0   0   -> 40   = 10*2^2
      *      a<<3            0   1   0   1   0   0   0   0   -> 80   = 10*2^3
