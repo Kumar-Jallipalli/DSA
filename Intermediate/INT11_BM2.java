@@ -221,7 +221,22 @@ public class INT11_BM2 {
      *          i=2                 0           == 10011 == 19
     */
     int unSetIthBit (int N, int i) {
-        return 1;
+        /*
+         *  LOGIC
+         *  -----
+         *      - we will make a number x, such that it will have "0" in ith bit & all remaining bits are "1"s
+         *      - Then we will do (N&x) --> Gives ans
+         *              EX:             4   3   2   1   0
+         *                  N=23        1   0   1   1   1      
+         *               i=2    => x =  1   1   0   1   1   
+         *                              -----------------
+         *                  N & x       1   0   0   1   1   == ans
+         * 
+         *      - How to get x
+         *              - 1st make a number which will have only ith bit as "1" [ remaining all "0"s]   = 1<<i
+         *              - Now make inverse of it =>     x = ~(1<<i)
+        */
+        return N&(~(1<<i));
     }
 
 
@@ -238,6 +253,18 @@ public class INT11_BM2 {
             ans += (1<<i);
         }
         return ans;
+        /*
+         *  Another way
+         *  -----------
+         *      - x=4, y=2 => 111100
+         *      - we can get above number by Left Shifting 1111 by 2 times [ i.e., y times ] == 111100
+         *      - How to get x=4 => 1111
+         *              - we can use 10000 - 1 == 1111
+         *              - i.e, (2^x)-1    == 2^4 - 1 == 8-1 == 7
+         * 
+         *  CODE:
+         *      return ((1<<x)-1)<<y;
+        */
     }
 
 }
