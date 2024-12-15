@@ -33,7 +33,7 @@ public class INT15_Sorting {
      *              - Radix sort
      *              - Counting sort
      *              - Bucket sort
-     *              - Tim sort [ Won't be DIscussed ]
+     *              - Tim sort [ Won't be DIscussed ]   --> Used by Python & Java Internally
      *              - Shell sort [ Won't be DIscussed ]
      *      - Stable Sorting 
      *              - If 2 elements compared are same and their relative order before & after sorting is also same
@@ -215,5 +215,24 @@ public class INT15_Sorting {
      * 
      *      A.sort(key=cmp_to_key (compare) )
      *          -> This sort function will sort the array based on the compare function
+     * 
+     * 
+     *  EX: Sort the following array based on the No. of Factors
+     *              arr = { 49 16 25 30 10 5}
+     *          factors =   3  5  3  8  4  2
+     *              ans = { 5 49 25 10 16 30 }
+     * 
+     *  ans: public static boolean compare (int a, int b) {
+     *              int fact1 = factors(a);
+     *              int fact2 = factors(b);
+     *              if (a < b) {
+     *                  return true;
+     *              } 
+     *              else { 
+     *                  return false;
+     *              }
+     *       }
+     *      
+     *      Collections.sort(arr, compare);
     */
 }
