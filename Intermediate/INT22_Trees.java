@@ -76,7 +76,11 @@ public class INT22_Trees {
  *  TREES:
  *  ------
  *      - Data Structures like Arrays, ArrayLists, LinkedLists, Stacks etc.. are --> Linear DS
- *      - Trees is a Hiearchial DS --> Non-Linear DS
+ *              - These DS's cannot be used for Hiearchy data
+ *              - These cannot be used for Seaching Operation [ Searching is most frequently used in CS ] 
+ * 
+ *      - "Trees" is a Hiearchial DS --> Non-Linear DS
+ *      - EX: HTML page, File Structure in OS
  *      - Terminology
  *              root --> Top Most Node [ Has NO Parent ]
  *              edges --> Arrow pointers
@@ -85,12 +89,52 @@ public class INT22_Trees {
  *              Leaf Node -> Node which doesn't have a Child
  * 
  *      Binary Trees -> A Tree where every node contains atmax 2 child nodes
+ * 
+ *  NOTE:
+ *  -----
+ *      - Parent Node has references to CHild Nodes
+ *      - But Child Nodes has NO reference to Parent Node
  *      
 */
 
 /*
- *  TREE TRaversals
+ *  TREE Traversals
  *  ---------------
+ *      - For Traversal of Tree Nodes, we CANNOT use Loops
+ *      - why..?
+ *              - Because, we need to go back to Parent Node once our job is done with Child nodes
+ *              - This cannot be done with Loops [ As loops are Unidirectional ]
+ *              - As LL are Linear & Unidirectiional, Loops are used in LL for Traversal
+ *      - Hence, we will use Recursive method
+ *      - why Recursive method..?
+ *              - Because, Tree itslef is made out of "FRACTALS"
+ *              - Tree itslef behaves like a Recursive Tree [ A Node, Left SubTree & Right SubTree ]
+ * 
+ *      - We now know that, we can traverse the Tree Nodes usng Recursive Method
+ *      - How many ways we can Traverse/Iterate..?
+ *              - In Linked Lists, we don't have an Option for Traversal/Iteration
+ *                      - There is only 1 way, which is Linear way 
+ *                      - i.e., using head node, we will go to next node & so on.. 
+ *              - But in Trees, we have 2 ways,
+ *                      - Left
+ *                      - Right
+ *              - And including Root Node with Left Node & Right Node, we can traverse recursively as
+ *                            1           2      3       4       5       6
+ *                  1.      Root        Root    LST     LST     RST     RST
+ *                  2.      Left ST     RST     Root    RST     LST     Root
+ *                  3.      Right ST    LST     RST     Root    Root    LST
+ *              - Other than above 6 ways, we can Travers
+ *                      - In-Order
+ *                      - Zig-Zag & so on..
+ *              - Because of these many ways of Traversal, some Standard ways of Traversal are maintained
+ *      - These Standard/Conventional Traversal follows LST must be traversed before RST
+ *              - If we follows this standard [ LST must be traversed before RST ]
+ *              - we will be having with only 3 ways out of 6 mentioned above
+ *              - These 3 ways of Traversal are based on the Order of the Root Node visited
+ *                      - If Root node is visited 1st --> Pre-Order
+ *                      - If Root node is visited 2nd --> In-Order
+ *                      - If Root node is visited 3rd --> Post-Order
+ * 
  *  Pre-Order Traversal
  *          - It is a type of Tree Traversal where it follows Root-Left-Right traversal
  *                  1st visit the ROOT & print
@@ -137,6 +181,12 @@ class Tree {
         printPreOrder(root.left);
         printPreOrder(root.right);
     }
+    /*
+     *  TC = O(N) || SC = O(h) [ where "h" is the height of the Tree ]
+     *          - But in the Worst case, height of tree will be No. of Nodes = n
+     *          - Hence, SC = O(N)
+     *          - For a Blanced Tree --> SC = O(logN)
+    */
 
     // iN-Order Traversal 
     void printInOrder (Tree root) {
@@ -183,6 +233,7 @@ class Tree {
     /*
      *  Q2: Calculate the Height of the Tree
      *      HEIGHT --> Distance between the Root Node & the Most Deepest Node
+     *             --> Longest branch of tree, starting from root node till the leaf Node
      *      ans:
     *           - we will ask recursion to cal Height of left tree 
     *           - we will ask recursion to cal Height of right tree
@@ -212,6 +263,38 @@ class Tree {
      *                  - return max(-1, -1) + 1
      *                  - ans = 0 [ this is CORRECT ]
     */
+
+
+
+    /*
+     *  Q3: Gievn 2 BT, Return true if both are identical
+     *      
+     *      Steps:
+     *          1. Check the Root Nodes [ r1.val == r2.val ]
+     *          2. Check the LST [ r1.left must be identical to r2.left ]
+     *          3. Check the RST [ r1.right must be identical to r2.right ]
+    */
+    boolean isIdentical (Tree r1, Tree r2) {
+        // If both roots are null --> Identical
+        if (r1 == null && r2 == null) {
+            return true;
+        }
+
+        // if anyone of the roots are null --> Not Identical
+        if (r1 == null || r2 == null) {
+            return false;
+        }
+
+        if (r1.data != r2.data) {
+            return false;
+        }
+
+        boolean lst = isIdentical(r1.left, r2.left);
+        boolean rst = isIdentical(r1.right, r2.right);
+
+        return lst && rst;
+    }
+    // same as Pre-Order Traversal ==> TC = O(N) || SC = O(N) 
 }
 
 
